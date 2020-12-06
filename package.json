@@ -8,7 +8,9 @@
     "start": "node back_end/server",
     "server": "nodemon back_end/server",
     "client": "npm start --prefix front_end",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node back_end/seeder",
+    "data:destroy": "node back_end/seeder -d"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
   },
   "homepage": "https://github.com/AChristoff/e-shop#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
