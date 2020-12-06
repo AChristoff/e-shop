@@ -7,29 +7,40 @@ import User from './models/userModel.js'
 import Products from './models/productModel.js'
 import Order from './models/productModel.js'
 import connectDB from './config/db.js'
-import e from 'express'
 
 dotenv.config()
 connectDB()
 
-const importData = async () => {
+const seedUsers = async () => {
   try {
     // Seed users
-    const createdUsers = await User.insertMany(users);
-    const adminUser = createdUsers[0]._id
-    // Add "user" to products
-    const sampleProducts = products.map(product => { 
-      return {...product, user: adminUser} 
-    })
-    // Seed products
-    await Products.insertMany(sampleProducts);
-    console.log('Data Imported!'.green.inverse);
+    await User.insertMany(users);
+  
+    console.log('Users Seeded Successfully!'.green.inverse);
     process.exit()
 
   } catch (err) {
     console.error(`${err}`.red.inverse)
     process.exit(1)
   }
+}
+
+const seedProducts = async () => {
+  // Set product owner - Admin
+  const admin = await User.findOne({isAdmin: true})
+      try {
+        const newProducts = products.map((product) => {
+          return { ...product, user: admin._id }
+        })
+        // Seed products
+        await Products.insertMany(newProducts)
+
+        console.log('Products Seeded Successfully!'.green.inverse)
+        process.exit()
+      } catch (err) {
+        console.error(`${err}`.red.inverse)
+        process.exit(1)
+      }
 }
 
 const destroyData = async () => {
@@ -48,8 +59,14 @@ const destroyData = async () => {
   }
 }
 
-if (process.argv[2] === '-d') {
-  destroyData()
-} else {
-  importData()
+switch (process.argv[2]) {
+  case '-d': 
+    destroyData()
+    break;
+  case '-u': 
+    seedUsers()
+    break;
+  case '-p': 
+    seedProducts()
+    break;
 }

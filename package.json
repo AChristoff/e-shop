@@ -9,7 +9,8 @@
     "server": "nodemon back_end/server",
     "client": "npm start --prefix front_end",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "data:import": "node back_end/seeder",
+    "data:seed-users": "node back_end/seeder -u",
+    "data:seed-products": "node back_end/seeder -p",
     "data:destroy": "node back_end/seeder -d"
   },
   "repository": {
