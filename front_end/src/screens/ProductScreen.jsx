@@ -28,10 +28,10 @@ const ProductScreen = ({match}) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <Row>
-          <Col md={6}>
+          <Col sm={12} md={8} lg={6}>
             <Image src={product.image} alt={product.name} fluid />
           </Col>
-          <Col md={3}>
+          <Col sm={12} md={12} lg={3} className='mb-4'>
             <ListGroup variant='flush'>
               <ListGroup.Item>
                 <h3>{product.name}</h3>
@@ -48,7 +48,7 @@ const ProductScreen = ({match}) => {
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col md={3}>
+          <Col sm={12} md={6} lg={3}>
             <Card>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
