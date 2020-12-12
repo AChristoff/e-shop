@@ -43,10 +43,10 @@ const Cart = ({match, location, history }) => {
             {cartItems.map((item) => (
               <ListGroup.Item key={item.product}>
                 <Row>
-                  <Col md={2}>
+                  <Col md={3}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
-                  <Col md={3}>
+                  <Col md={4}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
                   <Col md={2}>${item.price}</Col>
@@ -67,7 +67,7 @@ const Cart = ({match, location, history }) => {
                       ))}
                     </Form.Control>
                   </Col>
-                  <Col md={2}>
+                  <Col md={1} className="text-center">
                     <Button
                       type='button'
                       variant='light'
@@ -82,17 +82,17 @@ const Cart = ({match, location, history }) => {
           </ListGroup>
         )}
       </Col>
-      <Col md={4}>
+      <Col md={4} className="mt-4">
         <Card>
           <ListGroup variant='flush'>
             <ListGroup.Item>
-              <h2>
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 items
-              </h2>
+              <h2>
               ${cartItems
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}
+              </h2>
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
