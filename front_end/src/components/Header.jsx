@@ -12,8 +12,8 @@ const Header = () => {
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>
-              <HiCursorClick style={{margin: '0 0.4em -0.1em 0', 'font-size': '1.5em' }}/>
-              <span style={{'text-transform': 'none', 'font-size': '1.4em'}}>e-Shop</span>
+              <HiCursorClick style={{margin: '0 0.4em -0.1em 0', 'fontSize': '1.5em' }}/>
+              <span style={{'textTransform': 'none', 'fontSize': '1.4em'}}>e-Shop</span>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
