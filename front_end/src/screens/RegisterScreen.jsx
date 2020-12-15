@@ -6,6 +6,8 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
+// reCaptcha
+import ReCAPTCHA from "react-google-recaptcha";
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState('')
@@ -13,11 +15,14 @@ const RegisterScreen = ({ location, history }) => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
+  const [token, setToken] = useState('')
 
   const dispatch = useDispatch()
 
   const userRegister = useSelector((state) => state.userRegister)
-  const { loading, userInfo, error } = userRegister
+  const { loading, error } = userRegister
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
   const redirect = location.search ? location.search.split('=')[1] : '/'
 
@@ -33,7 +38,7 @@ const RegisterScreen = ({ location, history }) => {
     if(password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(register(name, email, password))
+      dispatch(register(name, email, password, token))
     }
   }
 
@@ -83,6 +88,14 @@ const RegisterScreen = ({ location, history }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId='password'>
+          <ReCAPTCHA
+            sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY}
+            onChange={(token) => setToken(token)}
+            onExpired={(e) => setToken('')}
+          />
         </Form.Group>
 
         <Button type='submit' variant='primary'>
