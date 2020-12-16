@@ -4,32 +4,33 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import { FaTrash } from 'react-icons/fa'
 import Message from '../components/Message'
+import PriceFormatter from '../components/PriceFormatter'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
-const Cart = ({match, location, history }) => {
-  const productId = match.params.id 
-  
+const Cart = ({ match, location, history }) => {
+  const productId = match.params.id
+
   const qty = location.search ? Number(location.search.split('=')[1]) : 1
 
   const dispatch = useDispatch()
 
-  const cart = useSelector(state => state.cart)
+  const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
 
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty))
     }
-  },[dispatch, productId, qty])
+  }, [dispatch, productId, qty])
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id))
   }
 
   const checkoutHandler = () => {
-     history.push('/login?redirect=shipping')
+    history.push('/login?redirect=shipping')
   }
-  
+
   return (
     <Row>
       <Col md={8}>
@@ -49,7 +50,9 @@ const Cart = ({match, location, history }) => {
                   <Col md={4}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
-                  <Col md={2}>${item.price}</Col>
+                  <Col md={2}>
+                    <PriceFormatter price={item.price} />
+                  </Col>
                   <Col md={2}>
                     <Form.Control
                       as='select'
@@ -67,7 +70,7 @@ const Cart = ({match, location, history }) => {
                       ))}
                     </Form.Control>
                   </Col>
-                  <Col md={1} className="text-center">
+                  <Col md={1} className='text-center'>
                     <Button
                       type='button'
                       variant='light'
@@ -82,16 +85,19 @@ const Cart = ({match, location, history }) => {
           </ListGroup>
         )}
       </Col>
-      <Col md={4} className="mt-4">
+      <Col md={4} className='mt-4'>
         <Card>
           <ListGroup variant='flush'>
             <ListGroup.Item>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                items
+              Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+              items
               <h2>
-              ${cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}
+                <PriceFormatter
+                  price={cartItems.reduce(
+                    (acc, item) => acc + item.qty * item.price,
+                    0
+                  )}
+                />
               </h2>
             </ListGroup.Item>
             <ListGroup.Item>

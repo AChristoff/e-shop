@@ -5,6 +5,7 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import PriceFormatter from '../components/PriceFormatter'
 import { listProductDetails } from '../actions/productActions'
 
 const ProductScreen = ({history, match}) => {
@@ -52,7 +53,9 @@ const ProductScreen = ({history, match}) => {
                   text={`${product.numReviews} reviews`}
                 />
               </ListGroup.Item>
-              <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+              <ListGroup.Item>
+                Price: <PriceFormatter price={product.price}/>
+              </ListGroup.Item>
               <ListGroup.Item>
                 Description: ${product.description}
               </ListGroup.Item>
@@ -65,7 +68,7 @@ const ProductScreen = ({history, match}) => {
                   <Row>
                     <Col>Price:</Col>
                     <Col>
-                      <strong>${product.price}</strong>
+                      <PriceFormatter price={product.price}/>
                     </Col>
                   </Row>
                 </ListGroup.Item>
