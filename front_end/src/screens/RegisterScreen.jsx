@@ -90,7 +90,7 @@ const RegisterScreen = ({ location, history }) => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='token'>
+        <Form.Group controlId='token' style={{'min-height': '78px'}}>
           <ReCAPTCHA
             sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY}
             onChange={(token) => setToken(token)}
