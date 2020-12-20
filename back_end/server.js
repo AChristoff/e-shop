@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import rateLimit from 'express-rate-limit'
 import colors from 'colors'
 import connectDB from './config/db.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
@@ -13,6 +14,20 @@ dotenv.config()
 connectDB()
 // Express
 const app = express()
+
+// Set limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 100, // Limit each IP to 100 requests per 15 min
+  message: {
+    status: 429,
+    limiter: true,
+    type: "error",
+    message: 'To many requests, try again after 15 min'
+  }
+})
+app.use(limiter) // allow each IP to make 100 requests to the API for every 15 min
+
 // Set Body format
 app.use(express.json())
 
