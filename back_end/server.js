@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import rateLimit from 'express-rate-limit'
+import helmet from 'helmet'
 import colors from 'colors'
 import connectDB from './config/db.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
@@ -8,12 +9,18 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 
+
 // Dotenv 
 dotenv.config()
+
 // Mongo connection
 connectDB()
+
 // Express
 const app = express()
+
+// Start helmet
+app.use(helmet());
 
 // Set limiter
 const limiter = rateLimit({
