@@ -25,3 +25,8 @@ h1 {
 :disabled {
   cursor: not-allowed;
 }
+
+#root .nav-item a.active {
+  background-color: #eceeef;
+  color: #000000;
+}
