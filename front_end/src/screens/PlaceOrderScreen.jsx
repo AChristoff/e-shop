@@ -20,6 +20,11 @@ const PlaceOrderScreen = ({ history }) => {
   cart.taxPrice = Number(cart.itemsPrice * 0.2)
   cart.totalPrice =
     Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
+  // Format prices
+  cart.itemsPrice = cart.itemsPrice.toFixed(2)  
+  cart.shippingPrice = cart.shippingPrice.toFixed(2)  
+  cart.taxPrice = cart.taxPrice.toFixed(2)  
+  cart.totalPrice = cart.totalPrice.toFixed(2)  
 
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
