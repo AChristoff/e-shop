@@ -14,10 +14,11 @@ import Footer from './components/Footer'
 // import ShippingScreen from './screens/ShippingScreen'
 import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
+import OrderScreen from './screens/OrderScreen'
 
 const ProductScreen = React.lazy(() => import('./screens/ProductScreen'))
 const CartScreen = React.lazy(() => import('./screens/CartScreen'))
-const LoginScreen = React.lazy(() => import('./screens/LoginScreen')) 
+const LoginScreen = React.lazy(() => import('./screens/LoginScreen'))
 const RegisterScreen = React.lazy(() => import('./screens/RegisterScreen'))
 const ProfileScreen = React.lazy(() => import('./screens/ProfileScreen'))
 const ShippingScreen = React.lazy(() => import('./screens/ShippingScreen'))
@@ -31,17 +32,20 @@ const App = () => {
       <main className='py-3'>
         <React.Suspense fallback={<Loader />}>
           <Switch>
-            <Container>
-              <Route path='/shipping' component={ShippingScreen} />
-              <Route path='/payment' component={PaymentScreen} />
-              <Route path='/placeorder' component={PlaceOrderScreen} />
-              <Route path='/login' component={LoginScreen} />
-              <Route path='/register' component={RegisterScreen} />
-              <Route path='/profile' component={ProfileScreen} />
-              <Route path='/product/:id' component={ProductScreen} />
-              <Route path='/cart/:id?' component={CartScreen} />
-              <Route path='/' component={HomeScreen} exact />
-            </Container>
+            <>
+              <Container>
+                <Route path='/order/:id' component={OrderScreen} />
+                <Route path='/shipping' component={ShippingScreen} />
+                <Route path='/payment' component={PaymentScreen} />
+                <Route path='/placeorder' component={PlaceOrderScreen} />
+                <Route path='/login' component={LoginScreen} />
+                <Route path='/register' component={RegisterScreen} />
+                <Route path='/profile' component={ProfileScreen} />
+                <Route path='/product/:id' component={ProductScreen} />
+                <Route path='/cart/:id?' component={CartScreen} />
+                <Route path='/' component={HomeScreen} exact />
+              </Container>
+            </>
           </Switch>
         </React.Suspense>
       </main>
