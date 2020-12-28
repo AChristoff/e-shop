@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { listMyOrders } from '../actions/orderActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 const ProfileScreen = ({ location, history }) => {
@@ -15,14 +16,18 @@ const ProfileScreen = ({ location, history }) => {
 
   const dispatch = useDispatch()
 
+  // User details 
   const userDetails = useSelector((state) => state.userDetails)
   const { loading, user, error } = userDetails
-
+  // Is user logged in
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
+  // Update user
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success } = userUpdateProfile
+   // User orders
+   const orderListMy = useSelector((state) => state.orderListMy)
+   const { loading: loadingOrders, orders, error: errorOrders } = orderListMy
 
   useEffect(() => {
     if (!userInfo) {
@@ -31,6 +36,7 @@ const ProfileScreen = ({ location, history }) => {
       if (!user || !user.name) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails('profile'))
+        dispatch(listMyOrders())
       } else {
         setName(user.name)
         setEmail(user.email)
