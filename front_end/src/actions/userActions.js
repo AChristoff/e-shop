@@ -1,16 +1,32 @@
-import { USER_LOGIN_FAIL, USER_LOGOUT, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS, USER_UPDATE_PROFILE_FAIL } from "../constants/userConstants"
+import {
+  USER_LOGIN_FAIL,
+  USER_LOGOUT,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
+  USER_DETAILS_RESET,
+} from '../constants/userConstants'
+import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 import axios from 'axios'
 
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
-      type: USER_LOGIN_REQUEST
+      type: USER_LOGIN_REQUEST,
     })
 
     const config = {
       headers: {
-        'Content-type': 'application/json'
-      }
+        'Content-type': 'application/json',
+      },
     }
 
     const { data } = await axios.post(
@@ -21,7 +37,7 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: data
+      payload: data,
     })
 
     localStorage.setItem('userInfo', JSON.stringify(data))
@@ -39,18 +55,20 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
   dispatch({ type: USER_LOGOUT })
+  dispatch({ type: USER_DETAILS_RESET })
+  dispatch({ type: ORDER_LIST_MY_RESET })
 }
 
 export const register = (name, email, password, token) => async (dispatch) => {
   try {
     dispatch({
-      type: USER_REGISTER_REQUEST
+      type: USER_REGISTER_REQUEST,
     })
 
     const config = {
       headers: {
-        'Content-type': 'application/json'
-      }
+        'Content-type': 'application/json',
+      },
     }
 
     const { data } = await axios.post(
@@ -61,13 +79,13 @@ export const register = (name, email, password, token) => async (dispatch) => {
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
-      payload: data
+      payload: data,
     })
 
     // Login user right after registration
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: data
+      payload: data,
     })
 
     localStorage.setItem('userInfo', JSON.stringify(data))
@@ -88,25 +106,23 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       type: USER_DETAILS_REQUEST,
     })
 
-    const { userLogin: {userInfo} } = getState()
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     const config = {
       headers: {
         'Content-type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
-      }
+      },
     }
 
-    const { data } = await axios.get(
-      `/api/users/${id}`,
-      config
-    )
+    const { data } = await axios.get(`/api/users/${id}`, config)
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
-      payload: data
+      payload: data,
     })
-
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
@@ -124,29 +140,27 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_REQUEST,
     })
 
-    const { userLogin: {userInfo} } = getState()
+    const {
+      userLogin: { userInfo },
+    } = getState()
 
     const config = {
       headers: {
         'Content-type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
-      }
+      },
     }
 
-    const { data } = await axios.put(
-      '/api/users/profile',
-      user,
-      config
-    )
+    const { data } = await axios.put('/api/users/profile', user, config)
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
-      payload: data
+      payload: data,
     })
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: data
+      payload: data,
     })
 
     localStorage.setItem('userInfo', JSON.stringify(data))
