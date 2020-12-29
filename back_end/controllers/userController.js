@@ -29,7 +29,6 @@ const authUser = asyncHandler(async (req, res) => {
 // @route:    GET /api/users
 // @access:   Public
 const registerUser = asyncHandler(async (req, res) => {
-
   const { name, email, password, token } = req.body
 
   if (!token) {
@@ -41,11 +40,10 @@ const registerUser = asyncHandler(async (req, res) => {
   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`
 
   try {
-
     const response = await axios.post(url)
     const { success } = response.data
 
-    if(success) {
+    if (success) {
       const userExists = await User.findOne({ email })
 
       if (userExists) {
@@ -75,7 +73,6 @@ const registerUser = asyncHandler(async (req, res) => {
       res.status(400)
       throw new Error('Human verification failed! Bad token')
     }
-
   } catch (error) {
     res.status(400)
     throw new Error('reCAPTCHA failed!')
@@ -140,4 +137,19 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users)
 })
 
-export { authUser, getUserProfile, registerUser, updateUserProfile, getUsers }
+// @desc:     Delete user
+// @route:    DELETE /api/users/:id
+// @access:   Private/Admin
+const deleteUsers = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (user) {
+    await user.remove()
+    res.status(200).json({ message: 'User removed' })
+  } else {
+    res.status(404)
+    throw new Error('User Not Found!')
+  }
+})
+
+export { authUser, getUserProfile, registerUser, updateUserProfile, getUsers, deleteUsers }
