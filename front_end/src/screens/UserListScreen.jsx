@@ -2,25 +2,31 @@ import { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { FaTimes, FaCheck, FaTrash } from 'react-icons/fa'
-import { GrEdit } from 'react-icons/gr'
+import { FaTimes, FaCheck, FaTrash, FaEdit } from 'react-icons/fa'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listUsers } from '../actions/userActions'
 
-const UserListScreen = () => {
+const UserListScreen = ({history}) => {
   const dispatch = useDispatch()
 
   const userList = useSelector((state) => state.userList)
   const { loading, error, users } = userList
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  useEffect(() => {
+    if(userInfo && userInfo.isAdmin) {
+      dispatch(listUsers())
+    } else {
+      history.push('/login')
+    }
+  }, [dispatch, history, userInfo])
+
   const deleteHandler = (userId) => {
     console.log('del user')
   }
-
-  useEffect(() => {
-    dispatch(listUsers())
-  }, [dispatch])
 
   return (
     <>
@@ -49,14 +55,14 @@ const UserListScreen = () => {
                 <td>{user.isAdmin ? <FaCheck style={{color: 'green'}}/> : <FaTimes style={{color: 'red'}}/>}</td>
                 <td>
                   <LinkContainer to={`/user/${user._id}/edit`}>
-                    <Button variant='light' className='btn-sm'>
-                      <GrEdit/>
+                    <Button className='btn-sm border border-dark' variant='light'>
+                      <FaEdit style={{'font-size': '1.5em'}}/>
                     </Button>
                   </LinkContainer>
-                  <Button variant='danger' className='btn-sm' onClick={
+                  <Button variant='danger' className='btn-sm border border-danger' onClick={
                     () => deleteHandler(user._id)
                   }>
-                    <FaTrash />
+                    <FaTrash style={{'font-size': '1.5em'}}/>
                   </Button>
                 </td>
               </tr>
