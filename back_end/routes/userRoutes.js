@@ -8,9 +8,9 @@ const formLimiter = rateLimit({
   message: {
     status: 429,
     limiter: true,
-    type: "error",
-    message: 'To many attempts, try again after 1 hour'
-  }
+    type: 'error',
+    message: 'To many attempts, try again after 1 hour',
+  },
 })
 
 import {
@@ -18,10 +18,15 @@ import {
   authUser,
   getUserProfile,
   updateUserProfile,
+  getUsers,
 } from '../controllers/userController.js'
-import { protect } from '../middleware/authMiddleware.js'
+import { protect, admin } from '../middleware/authMiddleware.js'
 
-router.route('/').post(formLimiter, registerUser)
+router
+  .route('/')
+  .post(formLimiter, registerUser)
+  .get(protect, admin, getUsers)
+
 router.route('/login').post(formLimiter, authUser)
 
 router
