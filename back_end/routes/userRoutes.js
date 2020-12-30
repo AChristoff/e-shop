@@ -20,21 +20,29 @@ import {
   updateUserProfile,
   getUsers,
   deleteUsers,
+  getUserById,
+  updateUser,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
 router
   .route('/')
-  .post(formLimiter, registerUser)
   .get(protect, admin, getUsers)
+  .post(formLimiter, registerUser)
 
-router.route('/login').post(formLimiter, authUser)
+router
+.route('/login')
+.post(formLimiter, authUser)
 
 router
   .route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile)
 
-router.route('/:id').delete(protect, admin, deleteUsers)
+router
+  .route('/:id')
+  .get(protect, admin, getUserById)
+  .put(protect, admin, updateUser)
+  .delete(protect, admin, deleteUsers)
 
 export default router
