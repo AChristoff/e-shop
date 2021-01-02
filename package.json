@@ -11,7 +11,10 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:seed-users": "node back_end/seeder -u",
     "data:seed-products": "node back_end/seeder -p",
-    "data:destroy": "node back_end/seeder -d"
+    "data:destroy-users": "node back_end/seeder -d -u",
+    "data:destroy-products": "node back_end/seeder -d -p",
+    "data:destroy-orders": "node back_end/seeder -d -o",
+    "data:destroy-all": "node back_end/seeder -d"
   },
   "repository": {
     "type": "git",

@@ -6,31 +6,37 @@ import { FaTrash, FaEdit, FaPlus } from 'react-icons/fa'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import PriceFormatter from '../components/PriceFormatter'
-import { listProducts } from '../actions/productActions'
+import { listProducts, deleteProduct } from '../actions/productActions'
 
-const ProductListScreen = ({history, match}) => {
+const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)
   const { loading, error, products } = productList
 
+  const productDelete = useSelector((state) => state.productDelete)
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete
+
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   useEffect(() => {
-    if(userInfo && userInfo.isAdmin) {
+    if (userInfo && userInfo.isAdmin) {
       dispatch(listProducts())
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo])
+  }, [dispatch, history, userInfo, successDelete])
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
-      //  del products
+      dispatch(deleteProduct(id))
     }
   }
-
 
   const createProductHandler = (product) => {
     // crete product
@@ -48,6 +54,8 @@ const ProductListScreen = ({history, match}) => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -65,7 +73,7 @@ const ProductListScreen = ({history, match}) => {
             </tr>
           </thead>
           <tbody>
-            {products.map(product => (
+            {products.map((product) => (
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
@@ -76,14 +84,19 @@ const ProductListScreen = ({history, match}) => {
                 <td>{product.brand}</td>
                 <td>
                   <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                    <Button className='btn-sm border border-dark' variant='light'>
-                      <FaEdit style={{'font-size': '1.5em'}}/>
+                    <Button
+                      className='btn-sm border border-dark'
+                      variant='light'
+                    >
+                      <FaEdit style={{ 'font-size': '1.5em' }} />
                     </Button>
                   </LinkContainer>
-                  <Button variant='danger' className='btn-sm border border-danger' onClick={
-                    () => deleteHandler(product._id)
-                  }>
-                    <FaTrash style={{'font-size': '1.5em'}}/>
+                  <Button
+                    variant='danger'
+                    className='btn-sm border border-danger'
+                    onClick={() => deleteHandler(product._id)}
+                  >
+                    <FaTrash style={{ 'font-size': '1.5em' }} />
                   </Button>
                 </td>
               </tr>

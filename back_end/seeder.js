@@ -14,11 +14,10 @@ connectDB()
 const seedUsers = async () => {
   try {
     // Seed users
-    await User.insertMany(users);
-  
-    console.log('Users Seeded Successfully!'.green.inverse);
-    process.exit()
+    await User.insertMany(users)
 
+    console.log('Users Seeded Successfully!'.green.inverse)
+    process.exit()
   } catch (err) {
     console.error(`${err}`.red.inverse)
     process.exit(1)
@@ -27,32 +26,43 @@ const seedUsers = async () => {
 
 const seedProducts = async () => {
   // Set product owner - Admin
-  const admin = await User.findOne({isAdmin: true})
-      try {
-        const newProducts = products.map((product) => {
-          return { ...product, user: admin._id }
-        })
-        // Seed products
-        await Products.insertMany(newProducts)
+  const admin = await User.findOne({ isAdmin: true })
+  try {
+    const newProducts = products.map((product) => {
+      return { ...product, user: admin._id }
+    })
+    // Seed products
+    await Products.insertMany(newProducts)
 
-        console.log('Products Seeded Successfully!'.green.inverse)
-        process.exit()
-      } catch (err) {
-        console.error(`${err}`.red.inverse)
-        process.exit(1)
-      }
+    console.log('Products Seeded Successfully!'.green.inverse)
+    process.exit()
+  } catch (err) {
+    console.error(`${err}`.red.inverse)
+    process.exit(1)
+  }
 }
 
 const destroyData = async () => {
   try {
-    // Clear/reset the DB!
-    await User.deleteMany()
-    await Products.deleteMany()
-    await Order.deleteMany()
+    switch (process.argv[3]) {
+      case '-u':
+        await User.deleteMany()
+        break
+      case '-p':
+        await Products.deleteMany()
+        break
+      case '-o':
+        await Order.deleteMany()
+        break
+      default:
+      // Clear/reset the DB!
+      await User.deleteMany()
+      await Products.deleteMany()
+      await Order.deleteMany()
+    }
 
-    console.log('Data Destroyed!'.red.inverse);
+    console.log('Data Destroyed!'.red.inverse)
     process.exit()
-
   } catch (err) {
     console.error(`${err}`.red.inverse)
     process.exit(1)
@@ -60,13 +70,13 @@ const destroyData = async () => {
 }
 
 switch (process.argv[2]) {
-  case '-d': 
+  case '-d':
     destroyData()
-    break;
-  case '-u': 
+    break
+  case '-u':
     seedUsers()
-    break;
-  case '-p': 
+    break
+  case '-p':
     seedProducts()
-    break;
+    break
 }
