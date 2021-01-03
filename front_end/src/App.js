@@ -25,6 +25,7 @@ const ShippingScreen = React.lazy(() => import('./screens/ShippingScreen'))
 const UserEditScreen = React.lazy(() => import('./screens/UserEditScreen'))
 const UserListScreen = React.lazy(() => import('./screens/UserListScreen'))
 const ProductListScreen = React.lazy(() => import('./screens/ProductListScreen'))
+const ProductEditScreen = React.lazy(() => import('./screens/ProductEditScreen'))
 // const PaymentScreen = React.lazy(() => import('./screens/PaymentScreen'))
 // const PlaceOrderScreen = React.lazy(() => import('./screens/PlaceOrderScreen'))
 
@@ -49,6 +50,7 @@ const App = () => {
                 <Route path='/admin/userlist' component={UserListScreen} />
                 <Route path='/admin/user/:id/edit' component={UserEditScreen} />
                 <Route path='/admin/productlist' component={ProductListScreen} />
+                <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
                 <Route path='/' component={HomeScreen} exact />
               </Container>
             </>
