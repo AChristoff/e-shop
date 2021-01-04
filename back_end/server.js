@@ -53,12 +53,13 @@ app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
 // PayPal 
 app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID))
-// Error handlers
-app.use(notFound)
-app.use(errorHandler)
 // Add static/public folders
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+// Error handlers
+app.use(notFound)
+app.use(errorHandler)
+
 
 // Start server
 const PORT = process.env.PORT || 5000
