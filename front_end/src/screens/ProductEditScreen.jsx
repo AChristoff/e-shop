@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -55,6 +55,7 @@ const ProductEditScreen = ({ match, history }) => {
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
     const formData = new FormData()
+    setImage('')
     formData.append('image', file)
     setUploading(true)
     
@@ -139,6 +140,7 @@ const ProductEditScreen = ({ match, history }) => {
                 custom
                 onChange={uploadFileHandler}
               ></Form.File>
+              {<Image src={`${image}`} className='w-100'/>}
               {uploading && <Loader />}
             </Form.Group>
 
