@@ -38,8 +38,10 @@ const upload = multer({
   }
 })
 
-router.post('/', upload.single('image'), (req, res) => {
-  res.send(`/${req.file.path}`)
+router.post('/', upload.fields([{name: 'image', maxCount: 3}]), (req, res) => {
+  if(req.files) {
+    res.send(req.files.image)
+  }
 })
 
 export default router

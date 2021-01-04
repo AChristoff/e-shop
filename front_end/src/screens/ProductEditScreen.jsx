@@ -14,7 +14,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
-  const [image, setImage] = useState('')
+  const [images, setImages] = useState([])
   const [brand, setBrand] = useState('')
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
@@ -43,7 +43,7 @@ const ProductEditScreen = ({ match, history }) => {
       } else {
         setName(product.name)
         setPrice(product.price)
-        setImage(product.image)
+        setImages(product.images)
         setBrand(product.brand)
         setCategory(product.category)
         setCountInStock(product.countInStock)
@@ -53,22 +53,27 @@ const ProductEditScreen = ({ match, history }) => {
   }, [dispatch, product, productId, history, successUpdate])
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
+    const files = Object.keys(e.target.files)
     const formData = new FormData()
-    setImage('')
-    formData.append('image', file)
+    files.forEach((x) => {
+      formData.append('image', e.target.files[x])
+    })
+
     setUploading(true)
-    
+
     try {
       const config = {
         headers: {
-          'Content-Type': 'multipart/from-data'
+          'Content-Type': 'multipart/from-data',
         },
       }
 
       const { data } = await axios.post('/api/upload', formData, config)
+      const imagesForUpload = data.map((img) => {
+        return '/' + img.destination + img.filename
+      })
 
-      setImage(data)
+      setImages(imagesForUpload)
       setUploading(false)
     } catch (error) {
       setUploading(false)
@@ -82,7 +87,7 @@ const ProductEditScreen = ({ match, history }) => {
         _id: productId,
         name,
         price,
-        image,
+        images,
         brand,
         category,
         countInStock,
@@ -128,19 +133,17 @@ const ProductEditScreen = ({ match, history }) => {
 
             <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
               <Form.File
                 id='image-file'
-                label='Choose file'
+                label='Select images'
                 custom
+                multiple
                 onChange={uploadFileHandler}
               ></Form.File>
-              {<Image src={`${image}`} className='w-100'/>}
+              {images.length > 0 &&
+                images.map((img) => (
+                  <Image src={`${img}`} className='w-100 my-2' />
+                ))}
               {uploading && <Loader />}
             </Form.Group>
 

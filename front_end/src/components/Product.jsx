@@ -8,7 +8,7 @@ const Product = ({ product }) => {
   return (
     <Card className='my-3 p-3 rounded'>
       <Link to={`/product/${product._id}`} className='overflow-hidden' style={{'height': '13em', position: 'relative'}}>
-        <Card.Img src={product.image} variant='top' style={{position: 'absolute', 'top': '50%', 'left': '50%', transform: 'translate(-50%, -50%)'}}/>
+        <Card.Img src={product.images[0]} variant='top' style={{position: 'absolute', 'top': '50%', 'left': '50%', transform: 'translate(-50%, -50%)'}}/>
       </Link>
 
       <Card.Body>
