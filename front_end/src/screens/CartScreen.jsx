@@ -45,7 +45,7 @@ const Cart = ({ match, location, history }) => {
               <ListGroup.Item key={item.product}>
                 <Row>
                   <Col md={3}>
-                    <Image src={item.image} alt={item.name} fluid rounded />
+                    <Image src={item.images[0]} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={4}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
