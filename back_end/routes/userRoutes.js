@@ -4,7 +4,7 @@ const router = express.Router()
 
 const formLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // Block IP for 1 hour after 5 requests
+  max: 10, // Block IP for 1 hour after 10 requests
   message: {
     status: 429,
     limiter: true,
@@ -16,6 +16,7 @@ const formLimiter = rateLimit({
 import {
   registerUser,
   authUser,
+  authUserGoogle,
   getUserProfile,
   updateUserProfile,
   getUsers,
@@ -32,8 +33,12 @@ router
   .post(formLimiter, registerUser)
 
 router
-.route('/login')
-.post(formLimiter, authUser)
+  .route('/login')
+  .post(formLimiter, authUser)
+
+router
+  .route('/login/google')
+  .post(formLimiter, authUserGoogle)
 
 router
   .route('/profile')

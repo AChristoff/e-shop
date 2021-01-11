@@ -51,8 +51,9 @@ app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
-// PayPal 
+// Config 
 app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID))
+app.get('/api/config/google', (req, res) => res.send(process.env.GOOGLE_CLIENT_ID))
 // Add static/public folders
 const __dirname = path.resolve()
 app.use('/uploads', express.static(__dirname + '/uploads'))

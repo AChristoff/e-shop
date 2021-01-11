@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 import axios from 'axios'
+import { OAuth2Client } from 'google-auth-library'
 
 // @desc:     Login user & get jwt token
 // @route:    GET /api/users/login
@@ -22,6 +23,58 @@ const authUser = asyncHandler(async (req, res) => {
   } else {
     res.status(401)
     throw new Error('Invalid email or password')
+  }
+})
+
+// @desc:     Login user with Google & get jwt token
+// @route:    GET /api/users/login/google
+// @access:   Public
+const authUserGoogle = asyncHandler(async (req, res) => {
+  const { tokenId } = req.body
+  const oAuth2Client = new OAuth2Client(process.env.GOOGLE_CLIENT_SECRET)
+  const { payload } = await oAuth2Client.verifyIdToken({
+    idToken: tokenId,
+    audience: `${process.env.GOOGLE_CLIENT_ID}`,
+  })
+
+  if (payload.email_verified) {
+    const user = await User.findOne({ email: payload.email })
+
+    if (user) {
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: generateToken(user._id),
+      })
+    } else {
+      const time = new Date().getTime()
+      const num = (Math.random() + 1) * time
+      const pass = num.toString().substring(0, 8) + payload.email + process.env.JWT_SECRET
+
+      const user = await User.create({
+        name: payload.name,
+        email: payload.email,
+        password: pass,
+      })
+
+      if (user) {
+        res.status(201).json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          token: generateToken(user._id),
+        })
+      } else {
+        res.status(400)
+        throw new Error('Something went wrong... Please try again.')
+      }
+    }
+  } else {
+    res.status(401)
+    throw new Error('Invalid Google Credentials')
   }
 })
 
@@ -176,7 +229,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
 
-    if(req.body.isAdmin === undefined){
+    if (req.body.isAdmin === undefined) {
       user.isAdmin = user.isAdmin
     } else {
       user.isAdmin = req.body.isAdmin
@@ -198,6 +251,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
 export {
   authUser,
+  authUserGoogle,
   getUserProfile,
   registerUser,
   updateUserProfile,
