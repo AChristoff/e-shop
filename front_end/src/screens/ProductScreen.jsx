@@ -82,6 +82,12 @@ const ProductScreen = ({history, match}) => {
                 <ListGroup.Item>
                   Description: ${product.description}
                 </ListGroup.Item>
+                <ListGroup.Item>
+                  Brand: {product.brand}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  Category: {product.category}
+                </ListGroup.Item>
               </ListGroup>
             </Col>
             <Col sm={12} md={6} lg={3}>
