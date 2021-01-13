@@ -1,19 +1,25 @@
 import { useEffect } from 'react'
+import { Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaTrash, FaEdit, FaPlus } from 'react-icons/fa'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Paginate from '../components/Paginate'
+import SearchBox from '../components/SearchBox'
 import PriceFormatter from '../components/PriceFormatter'
 import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 const ProductListScreen = ({ history, match }) => {
+  const keyword = match.params.keyword || ''
+  const pageNumber = match.params.pageNumber || 1
+
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)
-  const { loading, error, products } = productList
+  const { loading, error, products, pages, page } = productList
 
   const productDelete = useSelector((state) => state.productDelete)
   const {
@@ -43,11 +49,11 @@ const ProductListScreen = ({ history, match }) => {
     if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)
     } else {
-      dispatch(listProducts())
+      dispatch(listProducts(keyword, pageNumber))
     }
 
 
-  }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct])
+  }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, keyword, pageNumber])
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -61,15 +67,8 @@ const ProductListScreen = ({ history, match }) => {
 
   return (
     <>
-      <Row className='align-items-center'>
-        <Col>
+      <Row className='text-center'>
           <h1>Products</h1>
-        </Col>
-        <Col className='text-right'>
-          <Button className='my-3' onClick={createProductHandler}>
-            <FaPlus /> Create Product
-          </Button>
-        </Col>
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
@@ -80,48 +79,61 @@ const ProductListScreen = ({ history, match }) => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Table striped border hover responsive className='table-sm'>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>PRICE</th>
-              <th>CATEGORY</th>
-              <th>BRAND</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>{product._id}</td>
-                <td>{product.name}</td>
-                <td>
-                  <PriceFormatter price={product.price} />
-                </td>
-                <td>{product.category}</td>
-                <td>{product.brand}</td>
-                <td>
-                  <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                    <Button
-                      className='btn-sm border border-dark'
-                      variant='light'
-                    >
-                      <FaEdit style={{ 'font-size': '1.5em' }} />
-                    </Button>
-                  </LinkContainer>
-                  <Button
-                    variant='danger'
-                    className='btn-sm border border-danger'
-                    onClick={() => deleteHandler(product._id)}
-                  >
-                    <FaTrash style={{ 'font-size': '1.5em' }} />
-                  </Button>
-                </td>
+        <>
+          <Row className='align-items-center'>
+            <Col>
+              <Route render={({history}) => <SearchBox route='/admin/productlist/search/' history={history}/>} />
+            </Col>
+            <Col className='text-right'>
+              <Button className='btn-sm my-3' onClick={createProductHandler}>
+                <FaPlus /> Create Product
+              </Button>
+            </Col>
+          </Row>
+          <Table striped border hover responsive className='table-sm'>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>CATEGORY</th>
+                <th>BRAND</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product._id}>
+                  <td>{product._id}</td>
+                  <td>{product.name}</td>
+                  <td>
+                    <PriceFormatter price={product.price} />
+                  </td>
+                  <td>{product.category}</td>
+                  <td>{product.brand}</td>
+                  <td>
+                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
+                      <Button
+                        className='btn-sm border border-dark'
+                        variant='light'
+                      >
+                        <FaEdit style={{ 'font-size': '1.5em' }} />
+                      </Button>
+                    </LinkContainer>
+                    <Button
+                      variant='danger'
+                      className='btn-sm border border-danger'
+                      onClick={() => deleteHandler(product._id)}
+                    >
+                      <FaTrash style={{ 'font-size': '1.5em' }} />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Paginate pages={pages} page={page} keyword={keyword} isAdmin={true} />
+        </>
       )}
     </>
   )

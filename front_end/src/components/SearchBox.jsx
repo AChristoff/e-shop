@@ -1,33 +1,34 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-const SearchBox = ({history}) => {
+const SearchBox = ({route, history, isHeader = false}) => {
 
   const [keyword, setKeyword] = useState('')
 
   const submitHandler = (e) => {
     e.preventDefault()
     if(keyword.trim()) {
-      history.push(`/search/${keyword}`)
+      history.push(route + keyword)
     } else {
-      history.push('/')
+      route = route.replace('/search/', '')
+      history.push(route)
     }
   }
 
   const onKeyUpValue = () => {}
   
   return (
-    <Form onSubmit={submitHandler} inline>
+    <Form onSubmit={submitHandler} className={isHeader ? '' : 'mb-3'} inline >
       <Form.Control
         type='text'
         name='keyword'
         onChange={(e) => setKeyword(e.target.value)}
         onKeyUp={onKeyUpValue}
         placeholder='Search Product'
-        className='mr-sm-2 ml-sm-5'
+        className={isHeader ? 'mr-sm-2 ml-sm-5' : 'mr-sm-2'}
         style={{height: '35px'}}
       ></Form.Control>
-      <Button type='submit' variant='outline-success' className='btn-sm'>
+      <Button type='submit' variant={isHeader ? 'outline-success' : 'primary'} className='btn-sm'>
         Search
       </Button>
     </Form>
