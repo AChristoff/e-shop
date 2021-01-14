@@ -4,17 +4,21 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaTrash, FaEdit, FaPlus } from 'react-icons/fa'
+import queryString from 'query-string'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import SearchBox from '../components/SearchBox'
+import PageSize from '../components/PageSize'
 import PriceFormatter from '../components/PriceFormatter'
 import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
-const ProductListScreen = ({ history, match }) => {
-  const keyword = match.params.keyword || ''
-  const pageNumber = match.params.pageNumber || 1
+const ProductListScreen = ({ history, location }) => {
+  
+  const query = queryString.parse(location.search)
+  const { search, page: currentPage } = query
+  console.log(query);
 
   const dispatch = useDispatch()
 
@@ -49,11 +53,11 @@ const ProductListScreen = ({ history, match }) => {
     if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)
     } else {
-      dispatch(listProducts(keyword, pageNumber))
+      dispatch(listProducts(search, currentPage))
     }
 
 
-  }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, keyword, pageNumber])
+  }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, search, currentPage])
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -82,7 +86,7 @@ const ProductListScreen = ({ history, match }) => {
         <>
           <Row className='align-items-center'>
             <Col>
-              <Route render={({history}) => <SearchBox route='/admin/productlist/search/' history={history}/>} />
+              <Route render={({history}) => <SearchBox route='/admin/productlist' history={history} query={query}/>} />
             </Col>
             <Col className='text-right'>
               <Button className='btn-sm my-3' onClick={createProductHandler}>
@@ -132,7 +136,14 @@ const ProductListScreen = ({ history, match }) => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={pages} page={page} keyword={keyword} isAdmin={true} />
+          <Row>
+            <Col>
+              <Paginate route={'/admin/productlist'} query={query} pages={pages} page={page} />
+            </Col>
+            <Col>
+              <PageSize />
+            </Col>
+          </Row>
         </>
       )}
     </>

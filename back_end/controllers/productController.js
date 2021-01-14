@@ -7,7 +7,7 @@ import Product from '../models/productModel.js'
 const getProducts = asyncHandler(async (req, res) => {
   // Pagination
   const pageSize = Number(req.query.pageSize) || 2
-  const page = Number(req.query.pageNumber) || 1
+  let page = Number(req.query.pageNumber) || 1
 
   // Search
   const regExp = { $regex: new RegExp(req.query.keyword, 'i')};

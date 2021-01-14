@@ -52,9 +52,7 @@ const App = () => {
                 <Route path='/admin/user/:id/edit' component={UserEditScreen} />
 
                 <Route path='/admin/productlist' component={ProductListScreen} exact />
-                <Route path='/admin/productlist/search/:keyword' component={ProductListScreen} exact />
-                <Route path='/admin/productlist/page/:pageNumber' component={ProductListScreen} exact />
-                <Route path='/admin/productlist/search/:keyword/page/:pageNumber' component={ProductListScreen} />
+                <Route path='/admin/productlist/:q' component={ProductListScreen}/>
 
                 <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
                 <Route path='/admin/orderlist' component={OrderListScreen} />
