@@ -1,5 +1,6 @@
 import { Pagination } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { ITEMS_PER_PAGE } from '../constants/generalConstants'
 
 const Paginate = ({ route = '', query = {}, pages, page }) => {
 
@@ -8,7 +9,6 @@ const Paginate = ({ route = '', query = {}, pages, page }) => {
   const visiblePagesCount = allPages.length || 5 // number of visible pages
   const from = page-3 <0 ? 0 : page-3
   const to = page+2
-  console.log(allPages);
   // Ranged pages array 
   let visiblePages = allPages.slice(from, to)
 
@@ -33,8 +33,9 @@ const Paginate = ({ route = '', query = {}, pages, page }) => {
     }
   }
 
-  const limit = query.limit || 2
-  const keyword = query.search || ''
+  // Set Query params fallbacks
+  const limit = query.limit || ITEMS_PER_PAGE
+  const search = query.search || ''
   const filters = query.filters || ''
 
   const disabled = pages <= 1 ? 'disabled' : ''
@@ -44,26 +45,26 @@ const Paginate = ({ route = '', query = {}, pages, page }) => {
   return (
     <Pagination>
 
-      <LinkContainer LinkContainer to={`${route}/q?page=${1}&limit=${limit}&search=${keyword}&filters=${filters}`}> 
+      <LinkContainer LinkContainer to={`${route}/q?page=${1}&limit=${limit}&search=${search}&filters=${filters}`}> 
         <Pagination.First  disabled={disabled || start} />
       </LinkContainer>
 
-      <LinkContainer to={`${route}/q?page=${page - 1}&limit=${limit}&search=${keyword}&filters=${filters}`}>
+      <LinkContainer to={`${route}/q?page=${page - 1}&limit=${limit}&search=${search}&filters=${filters}`}>
         <Pagination.Prev  disabled={disabled || start} />
       </LinkContainer>
           
       {visiblePages.map(x => (
         <LinkContainer key={x}
-        to={`${route}/q?page=${x}&limit=${limit}&search=${keyword}&filters=${filters}`}>
+        to={`${route}/q?page=${x}&limit=${limit}&search=${search}&filters=${filters}`}>
           <Pagination.Item disabled={disabled} active={x === page}>{x}</Pagination.Item>
         </LinkContainer>
       ))}
     
-      <LinkContainer to={`${route}/q?page=${page + 1}&limit=${limit}&search=${keyword}&filters=${filters}`}>
+      <LinkContainer to={`${route}/q?page=${page + 1}&limit=${limit}&search=${search}&filters=${filters}`}>
         <Pagination.Next  disabled={disabled || end} />
       </LinkContainer>
 
-      <LinkContainer to={`${route}/q?page=${pages}&limit=${limit}&search=${keyword}&filters=${filters}`}>
+      <LinkContainer to={`${route}/q?page=${pages}&limit=${limit}&search=${search}&filters=${filters}`}>
         <Pagination.Last  disabled={disabled || end} />
       </LinkContainer>
 

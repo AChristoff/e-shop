@@ -1,12 +1,18 @@
 import { useState } from 'react'
 import { Form } from 'react-bootstrap'
+import { ITEMS_PER_PAGE, ITEMS_PER_PAGE_LIST } from '../constants/generalConstants'
 
 const PageSize = ({ route = '', query = {}, history }) => {
-  const [size, setSize] = useState([2,4,6,8])
+  const [size, setSize] = useState(ITEMS_PER_PAGE_LIST)
+
+   // Set Query params fallbacks
+   const page = query.page || 1
+   const search = query.search || ''
+   const filters = query.filters || ''
 
   const handleChange = (e) => {
     e.preventDefault()
-    history.push(`${route}/q?page=${query.page}&limit=${e.target.value}&search=${query.search}&filters=${query.filters}`)
+    history.push(`${route}/q?page=${page}&limit=${e.target.value}&search=${search}&filters=${filters}`)
   }
     
   return (

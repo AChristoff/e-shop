@@ -1,13 +1,19 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import { ITEMS_PER_PAGE } from '../constants/generalConstants'
 
 const SearchBox = ({route, history, isHeader = false, query = {} }) => {
 
   const [keyword, setKeyword] = useState(query.search)
 
+  // Set Query params fallbacks
+  const limit = query.limit || ITEMS_PER_PAGE
+  const filters = query.filters || ''
+  const page = 1
+
   const submitHandler = (e) => {
     e.preventDefault()
-    history.push(`${route}/q?page=1&limit=${query.limit}&search=${keyword}&filters=${query.filters}`)
+    history.push(`${route}/q?page=${page}&limit=${limit}&search=${keyword}&filters=${filters}`)
   }
 
   const onKeyUpValue = () => {}
