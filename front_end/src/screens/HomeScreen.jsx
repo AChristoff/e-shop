@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import queryString from 'query-string'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/Message'
@@ -7,18 +8,19 @@ import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import { listProducts } from '../actions/productActions'
 
-const HomeScreen = ({match}) => {
-  const keyword = match.params.keyword || ''
-  const pageNumber = match.params.pageNumber || 1
-
+const HomeScreen = ({match, location}) => {
+  // For pagination
+  const query = queryString.parse(location.search)
+  const { search, page: currentPage, limit } = query
+  
   const dispatch = useDispatch()
 
   const productList = useSelector(state => state.productList )
   const { loading, error, products, pages, page } = productList
 
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber))
-  }, [dispatch, keyword, pageNumber])
+    dispatch(listProducts(search, currentPage, limit))
+  }, [dispatch, search, currentPage, limit])
 
   return (
     <>
@@ -36,7 +38,7 @@ const HomeScreen = ({match}) => {
               </Col>
             ))}
           </Row>
-          <Paginate pages={pages} page={page} keyword={keyword}/>
+          <Paginate route={''} query={query} pages={pages} page={page}/>
         </>
       )}
     </>

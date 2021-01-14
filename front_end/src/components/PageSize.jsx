@@ -1,33 +1,30 @@
 import { useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 
-const PageSize = ({ route, pageSize = 3, pageNumber = '', keyword = '', history }) => {
-  const [size, setSize] = useState(4)
+const PageSize = ({ route = '', query = {}, history }) => {
+  const [size, setSize] = useState([2,4,6,8])
 
   const handleChange = (e) => {
-    console.log(e.target.value);
-    setSize(e.target.value)
-    if (keyword.trim()) {
-      history.push(`${route}?search=${keyword}&pageNumber=${pageNumber}&pageSize=${pageSize}`)
-    } else {
-      route = route.replace('/search/', '')
-      history.push(`${route}/${pageSize}/${e.target.value}`)
-    }
+    e.preventDefault()
+    history.push(`${route}/q?page=${query.page}&limit=${e.target.value}&search=${query.search}&filters=${query.filters}`)
   }
     
   return (
-    <Form.Control
-      as='select'
-      size='sm'
-      value={4}
-      onChange={handleChange}
-    >
-      {[...Array(4).keys()].map((x) => (
-        <option key={x + 1} value={x + 1}>
-          {x + 1}
-        </option>
-      ))}
-    </Form.Control>
+    <Form.Group controlId='limit' className='d-flex align-items-center' style={{width: '120px', 'margin-left': 'auto'}}>
+      <Form.Label className='mb-0 mr-2 d-flex align-items-center'>Results</Form.Label>
+      <Form.Control
+        as='select'
+        size='sm'
+        value={query.limit}
+        onChange={handleChange}
+      >
+        {size.map((x) => (
+          <option key={x} value={x}>
+            {x}
+          </option>
+        ))}
+      </Form.Control>
+    </Form.Group>
   )
 }
 

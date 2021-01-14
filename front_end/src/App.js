@@ -33,7 +33,7 @@ const OrderListScreen = React.lazy(() => import('./screens/OrderListScreen'))
 const App = () => {
   return (
     <Router>
-      <Header />
+      <Route render={({history, location}) => <Header history={history} location={location}/>} />     
       <main className='py-3'>
         <React.Suspense fallback={<Loader />}>
           <Switch>
@@ -52,16 +52,14 @@ const App = () => {
                 <Route path='/admin/user/:id/edit' component={UserEditScreen} />
 
                 <Route path='/admin/productlist' component={ProductListScreen} exact />
-                <Route path='/admin/productlist/:q' component={ProductListScreen}/>
+                <Route path='/admin/productlist/:q' component={ProductListScreen} exact/>
 
                 <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
                 <Route path='/admin/orderlist' component={OrderListScreen} />
 
-                <Route path='/search/:keyword' component={HomeScreen} exact />
-                <Route path='/page/:pageNumber' component={HomeScreen} />
-                <Route path='/search/:keyword/page/:pageNumber' component={HomeScreen} />
-
                 <Route path='/' component={HomeScreen} exact />
+                <Route path='/:q' component={HomeScreen} exact />
+
               </Container>
             </>
           </Switch>

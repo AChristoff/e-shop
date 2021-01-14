@@ -20,13 +20,13 @@ import {
   PRODUCT_CREATE_REVIEW_FAIL,
 } from '../constants/productConstants'
 
-export const listProducts = (keyword = '', pageNumber = '') => async (dispatch) => {
+export const listProducts = (search = '', currentPage = '1', limit = '2' ) => async (dispatch) => {
   try {
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     })
 
-    const { data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
+    const { data } = await axios.get(`/api/products?keyword=${search}&pageNumber=${currentPage}&limit=${limit}`)
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,

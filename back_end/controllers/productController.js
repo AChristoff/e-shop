@@ -6,7 +6,7 @@ import Product from '../models/productModel.js'
 // @access:   Public
 const getProducts = asyncHandler(async (req, res) => {
   // Pagination
-  const pageSize = Number(req.query.pageSize) || 2
+  const pageSize = Number(req.query.limit) || 2
   let page = Number(req.query.pageNumber) || 1
 
   // Search
@@ -22,12 +22,14 @@ const getProducts = asyncHandler(async (req, res) => {
 
   const count = await Product.countDocuments().or([...keyword])
   const pages = Math.ceil(count / pageSize)
+  // If results by page are changed and the page count is less then the current page
+  page = pages < page ? pages : page
  
   const products = await Product.find()
     .or([...keyword])
     .skip(pageSize * (page - 1))
     .limit(pageSize)
-
+  
   res.json({products, pages, page})
 })
 

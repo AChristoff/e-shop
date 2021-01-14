@@ -7,13 +7,7 @@ const SearchBox = ({route, history, isHeader = false, query = {} }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    if(keyword.trim()) {
-      history.push(route + keyword)
-      history.push(`${route}/q?page=${query.page}&limit=${query.limit}&search=${keyword}&filters=${query.filters}`)
-    } else {
-      route = route.replace('/search/', '')
-      history.push(route)
-    }
+    history.push(`${route}/q?page=1&limit=${query.limit}&search=${keyword}&filters=${query.filters}`)
   }
 
   const onKeyUpValue = () => {}

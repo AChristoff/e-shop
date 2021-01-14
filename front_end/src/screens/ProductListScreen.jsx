@@ -15,10 +15,9 @@ import { listProducts, deleteProduct, createProduct } from '../actions/productAc
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 const ProductListScreen = ({ history, location }) => {
-  
+  // For pagination
   const query = queryString.parse(location.search)
-  const { search, page: currentPage } = query
-  console.log(query);
+  let { search, page: currentPage, limit } = query
 
   const dispatch = useDispatch()
 
@@ -53,11 +52,11 @@ const ProductListScreen = ({ history, location }) => {
     if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)
     } else {
-      dispatch(listProducts(search, currentPage))
+      dispatch(listProducts(search, currentPage, limit))
     }
 
 
-  }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, search, currentPage])
+  }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, search, currentPage, limit])
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -141,7 +140,7 @@ const ProductListScreen = ({ history, location }) => {
               <Paginate route={'/admin/productlist'} query={query} pages={pages} page={page} />
             </Col>
             <Col>
-              <PageSize />
+            <Route render={({history}) => <PageSize route={'/admin/productlist'} query={query} history={history}/>} />
             </Col>
           </Row>
         </>
