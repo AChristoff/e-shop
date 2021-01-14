@@ -4,11 +4,11 @@ import { LinkContainer } from 'react-router-bootstrap'
 const Paginate = ({ route = '', query = {}, pages, page }) => {
 
   // How many pages will be visible in the pagination
-  const visiblePagesCount = 5 // number of visible pages
   const allPages = [...Array(pages).keys()].map(x => x + 1) // array from 1 to max visible pages
+  const visiblePagesCount = allPages.length || 5 // number of visible pages
   const from = page-3 <0 ? 0 : page-3
   const to = page+2
-
+  console.log(allPages);
   // Ranged pages array 
   let visiblePages = allPages.slice(from, to)
 
