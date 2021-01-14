@@ -14,7 +14,6 @@ import { listProducts } from '../actions/productActions'
 const HomeScreen = ({location}) => {
   // For pagination
   const query = queryString.parse(location.search)
-  console.log(query);
   const { search, page: currentPage, limit } = query
   
   const dispatch = useDispatch()
