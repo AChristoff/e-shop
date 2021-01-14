@@ -4,7 +4,7 @@ import { ITEMS_PER_PAGE } from '../constants/generalConstants'
 
 const SearchBox = ({route, history, isHeader = false, query = {} }) => {
 
-  const [keyword, setKeyword] = useState(query.search)
+  const [keyword, setKeyword] = useState(query.search || '')
 
   // Set Query params fallbacks
   const limit = query.limit || ITEMS_PER_PAGE

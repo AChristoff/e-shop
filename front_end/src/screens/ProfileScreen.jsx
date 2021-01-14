@@ -112,13 +112,13 @@ const ProfileScreen = ({ location, history }) => {
         </Form>
       </Col>
       <Col md={9}>
-        <h2>My orders</h2>
+        <h2 className='mb-1'>My orders</h2>
         {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
           <Message variant='danger'>{errorOrders}</Message>
         ) : (
-          <Table striped bordered hover responsive className='table-sm'>
+          <Table striped bordered hover responsive className='table-sm mt-4'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -137,21 +137,21 @@ const ProfileScreen = ({ location, history }) => {
                   <td>{order.totalPrice}</td>
                   <td>
                     {order.isPaid ? (
-                      <><FaCheck style={{ color: 'green' }}/> {order.paidAt.substring(0, 10)}</>
+                      <><FaCheck className='text-success'/> {order.paidAt.substring(0, 10)}</>
                     ) : (
                       <FaTimes style={{ color: 'red' }} />
                     )}
                   </td>
                   <td>
                     {order.isDelivered ? (
-                      <><FaCheck style={{ color: 'green' }}/> Delivered at:{order.deliveredAt.substring(0, 10)}</>
+                      <><FaCheck className='text-success'/> Delivered at:{order.deliveredAt.substring(0, 10)}</>
                     ) : (
                       <FaTimes style={{ color: 'red' }} />
                     )}
                   </td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
-                      <Button className='btn-sm border border-dark' variant='light'>Details</Button>
+                      <Button className='btn-sm' variant='outline-success'>Details</Button>
                     </LinkContainer>
                   </td>
                 </tr>

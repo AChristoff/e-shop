@@ -42,7 +42,7 @@ const Cart = ({ match, location, history }) => {
         ) : (
           <ListGroup variant='flush' className='overflow-hidden'>
             {cartItems.map((item) => (
-              <ListGroup.Item key={item.product}>
+              <ListGroup.Item key={item.product} style={{border: '1px solid rgba(0,0,0,.125)'}}>
                 <Row className='d-flex align-items-center'>
                   <Col md={3}>
                     <Image src={item.images[0]} alt={item.name} fluid rounded />
@@ -56,6 +56,7 @@ const Cart = ({ match, location, history }) => {
                   <Col md={2}>
                     <Form.Control
                       as='select'
+                      style={{border: '1px solid rgba(0,0,0,.125)'}}
                       value={item.qty}
                       onChange={(e) =>
                         dispatch(
@@ -74,6 +75,7 @@ const Cart = ({ match, location, history }) => {
                     <Button
                       type='button'
                       variant='light'
+                      className='p-3'
                       onClick={() => removeFromCartHandler(item.product)}
                     >
                       <FaTrash />
@@ -85,7 +87,7 @@ const Cart = ({ match, location, history }) => {
           </ListGroup>
         )}
       </Col>
-      <Col md={4} className='mt-4'>
+      <Col md={4} className='mt-5 pt-4'>
         <Card>
           <ListGroup variant='flush'>
             <ListGroup.Item>
