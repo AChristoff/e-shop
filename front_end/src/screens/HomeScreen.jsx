@@ -8,11 +8,13 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import PageSize from '../components/PageSize'
+import ProductCarousel from '../components/ProductCarousel'
 import { listProducts } from '../actions/productActions'
 
 const HomeScreen = ({location}) => {
   // For pagination
   const query = queryString.parse(location.search)
+  console.log(query);
   const { search, page: currentPage, limit } = query
   
   const dispatch = useDispatch()
@@ -25,7 +27,8 @@ const HomeScreen = ({location}) => {
   }, [dispatch, search, currentPage, limit])
 
   return (
-    <section className='d-flex flex-column h-100'>
+    <section className='d-flex flex-column h-100 products-page'>
+      { !Object.keys(query).length && <ProductCarousel />}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
@@ -33,7 +36,7 @@ const HomeScreen = ({location}) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Row>
+          <Row className='mb-5'>
             {products.map((product) => (
               <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
                 <Product product={product} />

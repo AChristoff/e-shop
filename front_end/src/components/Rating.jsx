@@ -2,7 +2,7 @@ import React from 'react'
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa'
 import PropTypes from 'prop-types'
 
-const Rating = ({value, text, color = '#f7be4a'}) => {
+const Rating = ({value, text, color = '#4bbf73'}) => {
 
   const createRating = () => {
     let rating = []
@@ -23,9 +23,9 @@ const Rating = ({value, text, color = '#f7be4a'}) => {
   }
 
   return (
-    <div className="rating">
+    <div className="rating d-flex align-items-center">
       {createRating()}
-      <span>{text && text}</span>
+      <span className='mt-1 ml-1'>{text && text}</span>
     </div>
   )
 }

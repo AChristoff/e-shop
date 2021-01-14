@@ -38,3 +38,26 @@ h1 {
 .form-check-label {
   margin: 2px 0 0 6px;
 }
+
+.products-page .carousel-indicators li {
+  color: #4bbf73;
+  background-color: #4bbf73;
+}
+
+.products-page .carousel-control-next, 
+.products-page .carousel-control-prev {
+  opacity: 0.95;
+  width: 10%;
+}
+
+.products-page .carousel-control-next span, 
+.products-page .carousel-control-prev span {
+  background-color: #4bbf73;
+  background-origin: content-box;
+  box-sizing: content-box;
+  padding: 6px;
+}
+
+.carousel-caption h2 {
+ border-bottom: solid 2px #4bbf73
+}
