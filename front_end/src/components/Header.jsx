@@ -34,7 +34,7 @@ const Header = ({history, location}) => {
           <LinkContainer to='/'>
             <Navbar.Brand>
               <HiCursorClick
-                style={{ margin: '0 0.4em -0.1em 0', fontSize: '1.5em' }}
+                className='text-success' style={{ margin: '0 0.4em -0.1em 0', fontSize: '1.5em' }}
               />
               <span style={{ textTransform: 'none', fontSize: '1.4em' }}>
                 e-Shop
@@ -43,7 +43,7 @@ const Header = ({history, location}) => {
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-          <Route render={({history}) => <SearchBox route='' history={history} query={query} isHeader={true} />} />
+          <Route render={({history}) => <SearchBox route='/products' history={history} query={query} isHeader={true} />} />
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>

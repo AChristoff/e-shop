@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ITEMS_PER_PAGE } from '../constants/generalConstants'
 import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -20,7 +21,8 @@ import {
   PRODUCT_CREATE_REVIEW_FAIL,
 } from '../constants/productConstants'
 
-export const listProducts = (search = '', currentPage = '1', limit = '2' ) => async (dispatch) => {
+export const listProducts = (search = '', currentPage = '1', limit = ITEMS_PER_PAGE ) => async (dispatch) => {
+
   try {
     dispatch({
       type: PRODUCT_LIST_REQUEST,

@@ -34,11 +34,11 @@ const App = () => {
   return (
     <Router>
       <Route render={({history, location}) => <Header history={history} location={location}/>} />     
-      <main className='py-3'>
+      <main className='py-3 d-flex'>
         <React.Suspense fallback={<Loader />}>
           <Switch>
             <>
-              <Container>
+              <Container className='mh-100'>
                 <Route path='/order/:id' component={OrderScreen} />
                 <Route path='/shipping' component={ShippingScreen} />
                 <Route path='/payment' component={PaymentScreen} />
@@ -47,7 +47,7 @@ const App = () => {
                 <Route path='/register' component={RegisterScreen} />
                 <Route path='/profile' component={ProfileScreen} />
                 <Route path='/product/:id' component={ProductScreen} />
-                <Route path='/cart/:id?' component={CartScreen} />
+                <Route path='/cart/:id?' component={CartScreen} exact />
                 <Route path='/admin/userlist' component={UserListScreen} />
                 <Route path='/admin/user/:id/edit' component={UserEditScreen} />
 
@@ -58,7 +58,7 @@ const App = () => {
                 <Route path='/admin/orderlist' component={OrderListScreen} />
 
                 <Route path='/' component={HomeScreen} exact />
-                <Route path='/:q' component={HomeScreen} exact />
+                <Route path='/products/:q' component={HomeScreen} exact />
 
               </Container>
             </>

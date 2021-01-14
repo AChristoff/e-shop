@@ -89,7 +89,7 @@ const ProductListScreen = ({ history, location }) => {
             </Col>
             <Col className='text-right'>
               <Button className='btn-sm my-3' onClick={createProductHandler}>
-                <FaPlus /> Create Product
+                <FaPlus className='text-success' /> Create Product
               </Button>
             </Col>
           </Row>
@@ -135,12 +135,12 @@ const ProductListScreen = ({ history, location }) => {
               ))}
             </tbody>
           </Table>
-          <Row>
+          <Row className='mt-3 pt-4 border-top'>
             <Col>
-              <Paginate route={'/admin/productlist'} query={query} pages={pages} page={page} />
+              <Route render={({history}) => <PageSize route={'/admin/productlist'} query={query} history={history}/>} />
             </Col>
-            <Col>
-            <Route render={({history}) => <PageSize route={'/admin/productlist'} query={query} history={history}/>} />
+            <Col className='d-flex'>
+              <Paginate route={'/admin/productlist'} query={query} pages={pages} page={page} />
             </Col>
           </Row>
         </>

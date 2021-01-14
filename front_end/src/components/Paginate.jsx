@@ -43,7 +43,7 @@ const Paginate = ({ route = '', query = {}, pages, page }) => {
   const end = pages === page ? 'disabled' : ''
   
   return (
-    <Pagination>
+    <Pagination className='ml-auto'>
 
       <LinkContainer LinkContainer to={`${route}/q?page=${1}&limit=${limit}&search=${search}&filters=${filters}`}> 
         <Pagination.First  disabled={disabled || start} />

@@ -19,15 +19,14 @@ const SearchBox = ({route, history, isHeader = false, query = {} }) => {
   const onKeyUpValue = () => {}
   
   return (
-    <Form onSubmit={submitHandler} className={isHeader ? '' : 'mb-3'} inline >
+    <Form onSubmit={submitHandler} className={isHeader ? '' : 'mb-3'} style={{'height': '35px'}} inline >
       <Form.Control
         type='text'
         name='keyword'
         onChange={(e) => setKeyword(e.target.value)}
         onKeyUp={onKeyUpValue}
         placeholder='Search Product'
-        className={isHeader ? 'mr-sm-2 ml-sm-5' : 'mr-sm-2'}
-        style={{height: '35px'}}
+        className={isHeader ? 'mr-sm-2 ml-sm-5 h-100' : 'mr-sm-2 h-100'}
       ></Form.Control>
       <Button type='submit' variant={isHeader ? 'outline-success' : 'primary'} className='btn-sm'>
         Search

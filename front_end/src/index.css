@@ -1,5 +1,9 @@
+html, body { 
+  height:100%; 
+}
+
 main {
-  min-height: 80vh;
+  min-height: 85vh;
 }
 
 h3 {
@@ -29,4 +33,8 @@ h1 {
 #root .nav-item a.active {
   background-color: #eceeef;
   color: #000000;
+}
+
+.form-check-label {
+  margin: 2px 0 0 6px;
 }

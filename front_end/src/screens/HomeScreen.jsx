@@ -10,7 +10,7 @@ import Paginate from '../components/Paginate'
 import PageSize from '../components/PageSize'
 import { listProducts } from '../actions/productActions'
 
-const HomeScreen = ({match, location}) => {
+const HomeScreen = ({location}) => {
   // For pagination
   const query = queryString.parse(location.search)
   const { search, page: currentPage, limit } = query
@@ -25,7 +25,7 @@ const HomeScreen = ({match, location}) => {
   }, [dispatch, search, currentPage, limit])
 
   return (
-    <>
+    <section className='d-flex flex-column h-100'>
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
@@ -40,17 +40,17 @@ const HomeScreen = ({match, location}) => {
               </Col>
             ))}
           </Row>
-          <Row>
+          <Row className='mt-auto pt-4 border-top'>
             <Col>
-            <Paginate route={''} query={query} pages={pages} page={page}/>
+              <Route render={({history}) => <PageSize route={'/products'} query={query} history={history}/>} />
             </Col>
-            <Col>
-              <Route render={({history}) => <PageSize route={''} query={query} history={history}/>} />
+            <Col className='d-flex'>
+              <Paginate route={'/products'} query={query} pages={pages} page={page}/>
             </Col>
           </Row>
         </>
       )}
-    </>
+    </section>
   )
 }
 

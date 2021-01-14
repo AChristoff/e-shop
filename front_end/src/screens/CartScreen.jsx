@@ -40,10 +40,10 @@ const Cart = ({ match, location, history }) => {
             Your cart is empty <Link to='/'>Go Back</Link>
           </Message>
         ) : (
-          <ListGroup variant='flush'>
+          <ListGroup variant='flush' className='overflow-hidden'>
             {cartItems.map((item) => (
               <ListGroup.Item key={item.product}>
-                <Row>
+                <Row className='d-flex align-items-center'>
                   <Col md={3}>
                     <Image src={item.images[0]} alt={item.name} fluid rounded />
                   </Col>

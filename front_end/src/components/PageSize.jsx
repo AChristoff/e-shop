@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { ITEMS_PER_PAGE, ITEMS_PER_PAGE_LIST } from '../constants/generalConstants'
 
 const PageSize = ({ route = '', query = {}, history }) => {
-  const [size, setSize] = useState(ITEMS_PER_PAGE_LIST)
+  const size = ITEMS_PER_PAGE_LIST
 
    // Set Query params fallbacks
    const page = query.page || 1
@@ -16,12 +15,12 @@ const PageSize = ({ route = '', query = {}, history }) => {
   }
     
   return (
-    <Form.Group controlId='limit' className='d-flex align-items-center' style={{width: '120px', 'margin-left': 'auto'}}>
+    <Form.Group controlId='limit' className='d-flex align-items-center mr-auto' style={{width: '120px'}}>
       <Form.Label className='mb-0 mr-2 d-flex align-items-center'>Results</Form.Label>
       <Form.Control
         as='select'
         size='sm'
-        value={query.limit}
+        value={query.limit || ITEMS_PER_PAGE}
         onChange={handleChange}
       >
         {size.map((x) => (

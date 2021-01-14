@@ -118,6 +118,7 @@ const ProductScreen = ({history, match}) => {
                           <Form.Control
                             as='select'
                             value={qty}
+                            className='border border-dark'
                             onChange={(e) => setQty(e.target.value)}
                           >
                             {[...Array(product.countInStock).keys()].map((x) => (
@@ -165,7 +166,7 @@ const ProductScreen = ({history, match}) => {
                     <Form onSubmit={submitHandler}>
                       <Form.Group controlId='rating'>
                         <Form.Label>Rating</Form.Label>
-                        <Form.Control as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
+                        <Form.Control className='border border-dark' as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
                           <option value=''>Select...</option>
                           <option value='1'>1 - Poor</option>
                           <option value='2'>2 - Fair</option>
@@ -176,7 +177,7 @@ const ProductScreen = ({history, match}) => {
                       </Form.Group>
                       <Form.Group controlId='comment'>
                         <Form.Label>Comment</Form.Label>
-                        <Form.Control as='textarea' row='3' value={comment} onChange={(e) => setComment(e.target.value)}></Form.Control>
+                        <Form.Control className='border border-dark' as='textarea' row='3' value={comment} onChange={(e) => setComment(e.target.value)}></Form.Control>
                       </Form.Group>
                       <Button type='submit' variant='primary'>Submit</Button>
                     </Form>
