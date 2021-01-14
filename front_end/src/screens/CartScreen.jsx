@@ -5,6 +5,7 @@ import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import { FaTrash } from 'react-icons/fa'
 import Message from '../components/Message'
 import PriceFormatter from '../components/PriceFormatter'
+import Meta from '../components/Meta'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const Cart = ({ match, location, history }) => {
@@ -33,6 +34,7 @@ const Cart = ({ match, location, history }) => {
 
   return (
     <Row>
+      <Meta title='Cart' />
       <Col md={8}>
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (

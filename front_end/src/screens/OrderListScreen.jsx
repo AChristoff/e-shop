@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaTimes } from 'react-icons/fa'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Meta from '../components/Meta'
 import PriceFormatter from '../components/PriceFormatter'
 import { listOrders } from '../actions/orderActions'
 
@@ -27,6 +28,7 @@ const OrderListScreen = ({history}) => {
 
   return (
     <>
+      <Meta title='Order List' />
       <h1>Orders</h1>
       {loading ? (
         <Loader />

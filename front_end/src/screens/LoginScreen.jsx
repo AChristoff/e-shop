@@ -5,6 +5,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Meta from '../components/Meta'
 import FormContainer from '../components/FormContainer'
 import { login, loginGoogle } from '../actions/userActions'
 import GoogleLogin from 'react-google-login'
@@ -48,6 +49,7 @@ const LoginScreen = ({ location, history }) => {
 
   return (
     <>
+      <Meta title='Login' />
       <h1 className='text-center'>Sign In</h1>
       <div class='justify-content-md-center row'>
         <div class='col-md-6'>

@@ -10,6 +10,7 @@ import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import SearchBox from '../components/SearchBox'
 import PageSize from '../components/PageSize'
+import Meta from '../components/Meta'
 import PriceFormatter from '../components/PriceFormatter'
 import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
@@ -70,6 +71,7 @@ const ProductListScreen = ({ history, location }) => {
 
   return (
     <>
+      <Meta title='Product list' />
       <Row className='text-center'>
           <h1>Products</h1>
       </Row>

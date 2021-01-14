@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaTimes, FaCheck, FaTrash, FaEdit } from 'react-icons/fa'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Meta from '../components/Meta'
 import { deleteUser, listUsers } from '../actions/userActions'
 
 const UserListScreen = ({history}) => {
@@ -35,6 +36,7 @@ const UserListScreen = ({history}) => {
 
   return (
     <>
+      <Meta title='Users' />
       <h1>Users</h1>
       {loading ? (
         <Loader />

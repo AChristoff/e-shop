@@ -3,6 +3,7 @@ import { Form, Button, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
+import Meta from '../components/Meta'
 import { savePaymentMethod } from '../actions/cartActions'
 
 const PaymentScreen = ({ history }) => {
@@ -25,6 +26,7 @@ const PaymentScreen = ({ history }) => {
 
   return (
     <>
+      <Meta title='Payment' />
       <CheckoutSteps step1 step2 step3 />
       <FormContainer>
         <h1>Payment Method</h1>
@@ -54,15 +56,6 @@ const PaymentScreen = ({ history }) => {
                 onChange={(e) => setPaymentMethod(e.target.value)}
               ></Form.Check>
 
-              {/* <Form.Check
-                type='radio'
-                label='Stripe'
-                id='Stripe'
-                name='paymentMethod'
-                value='Stripe'
-                className='my-3'
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              ></Form.Check> */}
             </Col>
           </Form.Group>
 

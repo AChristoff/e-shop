@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import queryString from 'query-string'
 import { Row, Col } from 'react-bootstrap'
@@ -8,6 +8,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import PageSize from '../components/PageSize'
+import Meta from '../components/Meta'
 import ProductCarousel from '../components/ProductCarousel'
 import { listProducts } from '../actions/productActions'
 
@@ -27,8 +28,13 @@ const HomeScreen = ({location}) => {
 
   return (
     <section className='d-flex flex-column h-100 products-page'>
-      { !Object.keys(query).length && <ProductCarousel />}
-      <h1>Latest Products</h1>
+      <Meta title='Products' />
+      { !Object.keys(query).length 
+        ? <ProductCarousel /> 
+        : <Link className='btn btn-light my-3' to='/' style={{'width': '110px'}}>
+          Go Back
+        </Link>}
+      <h1>Products</h1>
       {loading ? (
         <Loader />
       ) : error ? (

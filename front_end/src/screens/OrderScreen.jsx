@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Meta from '../components/Meta'
 import PriceFormatter from '../components/PriceFormatter'
 import {
   getOrderDetails,
@@ -88,6 +89,7 @@ const OrderScreen = ({ match, history }) => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
+      <Meta title='Order' />
       <h1>Order {order._id}</h1>
       <Row>
         <Col md={8}>
