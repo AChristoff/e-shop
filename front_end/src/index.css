@@ -1,5 +1,6 @@
-html, body { 
-  height:100%; 
+html,
+body {
+  height: 100%;
 }
 
 main {
@@ -44,13 +45,13 @@ h1 {
   background-color: #4bbf73;
 }
 
-.products-page .carousel-control-next, 
+.products-page .carousel-control-next,
 .products-page .carousel-control-prev {
   opacity: 0.95;
   width: 10%;
 }
 
-.products-page .carousel-control-next span, 
+.products-page .carousel-control-next span,
 .products-page .carousel-control-prev span {
   background-color: #4bbf73;
   background-origin: content-box;
@@ -59,5 +60,63 @@ h1 {
 }
 
 .carousel-caption h2 {
- border-bottom: solid 2px #4bbf73
+  border-bottom: solid 2px #4bbf73
 }
+
+
+@media (min-width: 1px) {
+
+  .carousel {
+    margin-bottom: 8em;
+    border: 2px solid #4bbf73;
+  }
+
+  .products-page .carousel-inner {
+    overflow: visible;
+    position: relative;
+  }
+
+  .carousel-image,
+  .carousel-title {
+    width: 100%;
+  }
+
+  .carousel-title {
+    position: absolute;
+    top: 2em;
+  }
+
+  .carousel-description {
+    display: none;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .carousel {
+    margin-bottom: 2em;
+  }
+
+  .carousel-inner {
+    overflow: hidden;
+  }
+
+  .carousel-title {
+    position: initial;
+  }
+}
+
+
+@media (min-width: 992px) {
+
+  .carousel-image,
+  .carousel-title {
+    width: 60%;
+  }
+
+  .carousel-description {
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {}

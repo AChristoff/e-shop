@@ -17,14 +17,14 @@ const ProductCarousel = () => {
   },[dispatch])
 
   return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
-    <Carousel pause='hover' className='bg-dark mb-4'>
+    <Carousel pause='hover' interval="500000" className='bg-dark'>
       {products.map((product) => (
         <Carousel.Item key={product._id}>
           <Link to={`/product/${product._id}`}>
-            <Image src={product.images[0]} alt={product.name} fluid />
+            <Image src={product.images[0]} alt={product.name} className='carousel-image' fluid />
             <Carousel.Caption className='carousel-caption'>
-              <h6 className='text-light bg-dark ml-auto' style={{'margin-bottom': '200px', 'margin-right': '-60px', 'width': '40%'}}>{product.description}</h6>
-              <h2 className='text-light bg-dark mx-auto mb-3 w-50'>
+              <h6 className='text-light bg-dark ml-auto p-2 carousel-description' style={{'margin-bottom': '25%', 'margin-right': '-60px', 'width': '40%'}}>{product.description}</h6>
+              <h2 className='text-light bg-dark mx-auto mb-3 p-2 carousel-title'>
                 {product.name} <span className='text-muted'>for&nbsp;
                 <PriceFormatter price={product.price} /></span>
               </h2>
