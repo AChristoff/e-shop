@@ -8,15 +8,18 @@ const SearchBox = ({route, history, isHeader = false, query = {} }) => {
 
   // Set Query params fallbacks
   const limit = query.limit || ITEMS_PER_PAGE
-  const filters = query.filters || ''
+  const category = query.category || ''
+  const search = query.search || ''
   const page = 1
 
   const submitHandler = (e) => {
     e.preventDefault()
-    history.push(`${route}/q?page=${page}&limit=${limit}&search=${keyword}&filters=${filters}`)
+    history.push(`${route}/q?page=${page}&limit=${limit}&search=${keyword}&category=${category}`)
   }
 
-  const onKeyUpValue = () => {}
+  const onKeyUpValue = () => {
+
+  }
   
   return (
     <Form onSubmit={submitHandler} className={isHeader ? '' : 'mb-3'} style={{'height': '35px'}} inline >
@@ -25,7 +28,8 @@ const SearchBox = ({route, history, isHeader = false, query = {} }) => {
         name='keyword'
         onChange={(e) => setKeyword(e.target.value)}
         onKeyUp={onKeyUpValue}
-        placeholder='Search Product'
+        value={keyword || query.search || ''}
+        placeholder={search || 'Search Product'}
         className={isHeader ? 'mr-sm-2 ml-sm-5 h-100' : 'mr-sm-2 h-100'}
       ></Form.Control>
       <Button type='submit' variant={isHeader ? 'outline-success' : 'primary'} className='btn-sm'>

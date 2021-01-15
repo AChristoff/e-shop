@@ -24,14 +24,14 @@ import {
   PRODUCT_TOP_FAIL,
 } from '../constants/productConstants'
 
-export const listProducts = (search = '', currentPage = '1', limit = ITEMS_PER_PAGE ) => async (dispatch) => {
+export const listProducts = (search = '', currentPage = '1', limit = ITEMS_PER_PAGE, category = '' ) => async (dispatch) => {
 
   try {
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     })
 
-    const { data } = await axios.get(`/api/products?keyword=${search}&pageNumber=${currentPage}&limit=${limit}`)
+    const { data } = await axios.get(`/api/products?keyword=${search}&pageNumber=${currentPage}&limit=${limit}&category=${category}`)
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,

@@ -1,18 +1,19 @@
+import React, { useState, useEffect } from 'react'
 import { Form } from 'react-bootstrap'
 import { ITEMS_PER_PAGE, ITEMS_PER_PAGE_LIST } from '../constants/generalConstants'
 
-const PageSize = ({ route = '', query = {}, history }) => {
+const PageSize = ({ route = '', query = {}, history, page = 1 }) => {
   const size = ITEMS_PER_PAGE_LIST
 
-   // Set Query params fallbacks
-   const page = query.page || 1
-   const search = query.search || ''
-   const filters = query.filters || ''
+  const [limit, setLimit] = useState(query.limit) 
 
-  const handleChange = (e) => {
-    e.preventDefault()
-    history.push(`${route}/q?page=${page}&limit=${e.target.value}&search=${search}&filters=${filters}`)
-  }
+  // Set Query params fallbacks
+  const search = query.search || ''
+  const category = query.category || ''
+
+  useEffect(() => {
+    history.push(`${route}/q?page=${page}&limit=${limit}&search=${search}&category=${category}`)
+  },[history, route, page, limit, search, category])
     
   return (
     <Form.Group controlId='limit' className='d-flex align-items-center mr-auto' style={{width: '120px'}}>
@@ -20,8 +21,8 @@ const PageSize = ({ route = '', query = {}, history }) => {
       <Form.Control
         as='select'
         size='sm'
-        value={query.limit || ITEMS_PER_PAGE}
-        onChange={handleChange}
+        value={limit || ITEMS_PER_PAGE}
+        onChange={(e) => setLimit(e.target.value)}
       >
         {size.map((x) => (
           <option key={x} value={x}>

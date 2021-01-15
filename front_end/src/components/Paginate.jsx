@@ -36,7 +36,7 @@ const Paginate = ({ route = '', query = {}, pages, page }) => {
   // Set Query params fallbacks
   const limit = query.limit || ITEMS_PER_PAGE
   const search = query.search || ''
-  const filters = query.filters || ''
+  const category = query.category || ''
 
   const disabled = pages <= 1 ? 'disabled' : ''
   const start = page === 1 ? 'disabled' : ''
@@ -45,26 +45,26 @@ const Paginate = ({ route = '', query = {}, pages, page }) => {
   return (
     <Pagination className='ml-auto'>
 
-      <LinkContainer LinkContainer to={`${route}/q?page=${1}&limit=${limit}&search=${search}&filters=${filters}`}> 
+      <LinkContainer LinkContainer to={`${route}/q?page=${1}&limit=${limit}&search=${search}&category=${category}`}> 
         <Pagination.First  disabled={disabled || start} />
       </LinkContainer>
 
-      <LinkContainer to={`${route}/q?page=${page - 1}&limit=${limit}&search=${search}&filters=${filters}`}>
+      <LinkContainer to={`${route}/q?page=${page - 1}&limit=${limit}&search=${search}&category=${category}`}>
         <Pagination.Prev  disabled={disabled || start} />
       </LinkContainer>
           
       {visiblePages.map(x => (
         <LinkContainer key={x}
-        to={`${route}/q?page=${x}&limit=${limit}&search=${search}&filters=${filters}`}>
+        to={`${route}/q?page=${x}&limit=${limit}&search=${search}&category=${category}`}>
           <Pagination.Item disabled={disabled} active={x === page}>{x}</Pagination.Item>
         </LinkContainer>
       ))}
     
-      <LinkContainer to={`${route}/q?page=${page + 1}&limit=${limit}&search=${search}&filters=${filters}`}>
+      <LinkContainer to={`${route}/q?page=${page + 1}&limit=${limit}&search=${search}&category=${category}`}>
         <Pagination.Next  disabled={disabled || end} />
       </LinkContainer>
 
-      <LinkContainer to={`${route}/q?page=${pages}&limit=${limit}&search=${search}&filters=${filters}`}>
+      <LinkContainer to={`${route}/q?page=${pages}&limit=${limit}&search=${search}&category=${category}`}>
         <Pagination.Last  disabled={disabled || end} />
       </LinkContainer>
 

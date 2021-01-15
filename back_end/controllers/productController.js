@@ -6,8 +6,20 @@ import Product from '../models/productModel.js'
 // @access:   Public
 const getProducts = asyncHandler(async (req, res) => {
   // Pagination
-  const pageSize = Number(req.query.limit) || 4
+  const limit = Number(req.query.limit) || 4
   let page = Number(req.query.pageNumber) || 1
+
+  // Filter
+  const categoryMap = {
+    1: 'Phones',
+    2: 'Computers',
+    3: 'Headphones',
+    4: 'Cameras',
+    5: 'TVs',
+    6: 'Gaming',
+  }
+  const categoryId = req.query.category || ''
+  const filter = categoryId ? {category: categoryMap[categoryId]} : {}
 
   // Search
   const regExp = { $regex: new RegExp(req.query.keyword, 'i')};
@@ -20,16 +32,16 @@ const getProducts = asyncHandler(async (req, res) => {
       ] 
     : [{}]
 
-  const count = await Product.countDocuments().or([...keyword])
-  const pages = Math.ceil(count / pageSize)
+  const count = await Product.countDocuments(filter).or([...keyword])
+  const pages = Math.ceil(count / limit) || 1
   // If results by page are changed and the page count is less then the current page
   page = pages < page ? pages : page
  
-  const products = await Product.find()
+  const products = await Product.find(filter)
     .or([...keyword])
-    .skip(pageSize * (page - 1))
-    .limit(pageSize)
-  
+    .skip(limit * (page - 1))
+    .limit(limit)
+ 
   res.json({products, pages, page})
 })
 
