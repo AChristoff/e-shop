@@ -68,7 +68,8 @@ h1 {
 
   .carousel {
     margin-bottom: 8em;
-    border: 2px solid #4bbf73;
+    border-top: 2px solid #4bbf73;
+    border-bottom: 2px solid #4bbf73;
   }
 
   .products-page .carousel-inner {
@@ -95,9 +96,10 @@ h1 {
 @media (min-width: 768px) {
   .carousel {
     margin-bottom: 2em;
+    border: 2px solid #4bbf73;
   }
 
-  .carousel-inner {
+  .products-page .carousel-inner {
     overflow: hidden;
   }
 
