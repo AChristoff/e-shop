@@ -30,7 +30,7 @@ const HomeScreen = ({location, history}) => {
   return (
     <section className='d-flex flex-column h-100 products-page'>
       <Meta title='Products' />
-      { !Object.keys(query).length 
+      { !search
         ? <ProductCarousel /> 
         : <Link className='btn btn-light my-3' to='/' style={{'width': '110px'}}>
           Go Back

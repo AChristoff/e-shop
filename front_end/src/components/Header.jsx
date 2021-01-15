@@ -8,7 +8,7 @@ import { HiCursorClick } from 'react-icons/hi'
 import { logout } from '../actions/userActions'
 import SearchBox from './SearchBox'
 
-const Header = ({history, location}) => {
+const Header = ({location}) => {
   // For pagination
   const query = queryString.parse(location.search)
 

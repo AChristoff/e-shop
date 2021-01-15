@@ -4,32 +4,26 @@ import { ITEMS_PER_PAGE } from '../constants/generalConstants'
 
 const SearchBox = ({route, history, isHeader = false, query = {} }) => {
 
-  const [keyword, setKeyword] = useState(query.search || '')
-
+  const [search, setKeyword] = useState(query.search || '')
+  console.log(query.search);
   // Set Query params fallbacks
   const limit = query.limit || ITEMS_PER_PAGE
   const category = query.category || ''
-  const search = query.search || ''
   const page = 1
 
   const submitHandler = (e) => {
     e.preventDefault()
-    history.push(`${route}/q?page=${page}&limit=${limit}&search=${keyword}&category=${category}`)
+    history.push(`${route}/q?page=${page}&limit=${limit}&search=${search}&category=${category}`)
   }
-
-  const onKeyUpValue = () => {
-
-  }
-  
+ 
   return (
     <Form onSubmit={submitHandler} className={isHeader ? '' : 'mb-3'} style={{'height': '35px'}} inline >
       <Form.Control
         type='text'
         name='keyword'
         onChange={(e) => setKeyword(e.target.value)}
-        onKeyUp={onKeyUpValue}
-        value={keyword || query.search || ''}
-        placeholder={search || 'Search Product'}
+        value={search || ''}
+        placeholder='Search Product'
         className={isHeader ? 'mr-sm-2 ml-sm-5 h-100' : 'mr-sm-2 h-100'}
       ></Form.Control>
       <Button type='submit' variant={isHeader ? 'outline-success' : 'primary'} className='btn-sm'>

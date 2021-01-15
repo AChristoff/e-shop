@@ -12,10 +12,6 @@ const CategorySelect = ({ route = '', query = {}, history }) => {
     6: 'Gaming',
   }
 
-  const categoryId = query.category || ''
-  const queryCategory = categoryId ? categoryMap[categoryId] : ''
-  const defaultCategory = queryCategory || ''
-
   const [category, setCategory] = useState(query.category)
 
   // Set Query params fallbacks

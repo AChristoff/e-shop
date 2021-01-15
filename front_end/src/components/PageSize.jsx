@@ -5,7 +5,7 @@ import { ITEMS_PER_PAGE, ITEMS_PER_PAGE_LIST } from '../constants/generalConstan
 const PageSize = ({ route = '', query = {}, history, page = 1 }) => {
   const size = ITEMS_PER_PAGE_LIST
 
-  const [limit, setLimit] = useState(query.limit) 
+  const [limit, setLimit] = useState(query.limit || ITEMS_PER_PAGE) 
 
   // Set Query params fallbacks
   const search = query.search || ''
