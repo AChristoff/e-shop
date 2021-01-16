@@ -41,10 +41,6 @@ app.use(limiter) // allow each IP to make 100 requests to the API for every 15 m
 // Set Body format
 app.use(express.json())
 
-app.get('/', (req, res) => {
-  res.send('API is running...')
-})
-
 // MIDDLEWARE
 // Routes
 app.use('/api/products', productRoutes)
@@ -54,9 +50,22 @@ app.use('/api/upload', uploadRoutes)
 // Config 
 app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID))
 app.get('/api/config/google', (req, res) => res.send(process.env.GOOGLE_CLIENT_ID))
+
 // Add static/public folders
 const __dirname = path.resolve()
 app.use('/uploads', express.static(__dirname + '/uploads'))
+
+// Set production folder
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/front_end/build'))
+  // if not /api/ route then serve the front end for all other routes
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'front_end', 'build', 'index.html')))
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running...')
+  })
+}
+
 // Error handlers
 app.use(notFound)
 app.use(errorHandler)
