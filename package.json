@@ -14,7 +14,8 @@
     "data:destroy-users": "node back_end/seeder -d -u",
     "data:destroy-products": "node back_end/seeder -d -p",
     "data:destroy-orders": "node back_end/seeder -d -o",
-    "data:destroy-all": "node back_end/seeder -d"
+    "data:destroy-all": "node back_end/seeder -d",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix front_end && npm run build --prefix front_end"
   },
   "repository": {
     "type": "git",
