@@ -1,4 +1,7 @@
+import * as dotenv from 'dotenv'
 import bcrypt from 'bcryptjs'
+
+dotenv.config({ path: '.env' });
 
 const users = [
   {
