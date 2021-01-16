@@ -9,6 +9,7 @@ import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
 // reCaptcha
 import ReCAPTCHA from "react-google-recaptcha";
+import { CAPTCHA_SITE_KEY } from '../constants/generalConstants'
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState('')
@@ -94,7 +95,7 @@ const RegisterScreen = ({ location, history }) => {
 
         <Form.Group controlId='token' style={{'min-height': '78px'}}>
           <ReCAPTCHA
-            sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY}
+            sitekey={CAPTCHA_SITE_KEY}
             onChange={(token) => setToken(token)}
             onExpired={(e) => setToken('')}
           />

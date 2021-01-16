@@ -1,7 +1,9 @@
+import { CURRENCY } from '../constants/generalConstants'
+
 const PriceFormatter = ({
   price = 0,
   fraction = 2,
-  currency = process.env.REACT_APP_CURRENCY,
+  currency = CURRENCY || 'EUR',
   location = 'bg-BG',
 }) => {
   const formattedPrice = new Intl.NumberFormat(location, {

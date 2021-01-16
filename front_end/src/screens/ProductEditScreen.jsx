@@ -9,6 +9,7 @@ import Meta from '../components/Meta'
 import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import { CURRENCY } from '../constants/generalConstants'
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id
@@ -124,7 +125,7 @@ const ProductEditScreen = ({ match, history }) => {
             </Form.Group>
 
             <Form.Group controlId='price'>
-              <Form.Label>Price in {process.env.REACT_APP_CURRENCY}</Form.Label>
+              <Form.Label>Price in {CURRENCY}</Form.Label>
               <Form.Control
                 type='number'
                 placeholder='Enter price'
