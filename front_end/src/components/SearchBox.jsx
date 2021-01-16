@@ -23,10 +23,10 @@ const SearchBox = ({route, history, isHeader = false, query = {} }) => {
         onChange={(e) => setKeyword(e.target.value)}
         value={search || ''}
         placeholder='Search Product'
-        className={isHeader ? 'mr-sm-2 ml-lg-5 h-100 mb-2' : 'mr-2 h-100 mb-2'}
+        className={isHeader ? 'mr-sm-2 ml-lg-5 h-100 my-1' : 'mr-2 h-100 mb-2'}
         style={{'max-height': '35px'}}  
       ></Form.Control>
-      <Button type='submit' variant={isHeader ? 'outline-success' : 'primary'} className='search-button btn-sm mb-2 w-sm-100'>
+      <Button type='submit' variant={isHeader ? 'outline-success' : 'primary'} className='search-button btn-sm my-1 w-sm-100'>
         Search
       </Button>
     </Form>
