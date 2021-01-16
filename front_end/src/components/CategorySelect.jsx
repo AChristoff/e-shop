@@ -24,11 +24,13 @@ const CategorySelect = ({ route = '', query = {}, history }) => {
   },[history, route, page, limit, search, category])
 
   return (
-    <Form.Group controlId='rating' className='d-flex align-items-center mt-2 mb-0'>
+    <Form.Group controlId='rating' className='d-flex align-items-center mb-3 mb-0'>
       <Form.Label className='m-0 mr-3'>Category</Form.Label>
       <Form.Control
         as='select'
         value={query.category}
+        style={{'height': '35px'}}
+        className='p-2'
         onChange={(e) => setCategory(e.target.value)}
       >
         <option value=''>Select...</option>

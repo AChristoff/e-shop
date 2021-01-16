@@ -25,7 +25,7 @@ const HomeScreen = ({location, history}) => {
 
   useEffect(() => {
     dispatch(listProducts(search, currentPage, limit, category))
-  }, [dispatch, search, currentPage, limit, category, history])
+  }, [dispatch, search, currentPage, limit, category])
 
   return (
     <section className='d-flex flex-column h-100 products-page'>

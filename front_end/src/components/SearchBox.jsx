@@ -5,7 +5,6 @@ import { ITEMS_PER_PAGE } from '../constants/generalConstants'
 const SearchBox = ({route, history, isHeader = false, query = {} }) => {
 
   const [search, setKeyword] = useState(query.search || '')
-  console.log(query.search);
   // Set Query params fallbacks
   const limit = query.limit || ITEMS_PER_PAGE
   const category = query.category || ''
@@ -17,16 +16,17 @@ const SearchBox = ({route, history, isHeader = false, query = {} }) => {
   }
  
   return (
-    <Form onSubmit={submitHandler} className={isHeader ? '' : 'mb-3'} style={{'height': '35px'}} inline >
+    <Form onSubmit={submitHandler} className={isHeader ? '' : 'mb-3 d-flex'} inline >
       <Form.Control
         type='text'
         name='keyword'
         onChange={(e) => setKeyword(e.target.value)}
         value={search || ''}
         placeholder='Search Product'
-        className={isHeader ? 'mr-sm-2 ml-sm-5 h-100' : 'mr-sm-2 h-100'}
+        className={isHeader ? 'mr-sm-2 ml-lg-5 h-100 mb-2' : 'mr-2 h-100 mb-2'}
+        style={{'max-height': '35px'}}  
       ></Form.Control>
-      <Button type='submit' variant={isHeader ? 'outline-success' : 'primary'} className='btn-sm'>
+      <Button type='submit' variant={isHeader ? 'outline-success' : 'primary'} className='search-button btn-sm mb-2 w-sm-100'>
         Search
       </Button>
     </Form>
