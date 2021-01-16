@@ -23,7 +23,7 @@ connectDB()
 const app = express()
 
 // Start helmet
-app.use(helmet());
+// app.use(helmet());
 
 // Set limiter
 const limiter = rateLimit({
@@ -36,7 +36,7 @@ const limiter = rateLimit({
     message: 'To many requests, try again after 15 min'
   }
 })
-app.use(limiter) // allow each IP to make 100 requests to the API for every 15 min
+// app.use(limiter) // allow each IP to make 100 requests to the API for every 15 min
 
 // Set Body format
 app.use(express.json())
